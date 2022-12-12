@@ -23,56 +23,55 @@ struct MyStringHash {
     HASH_INDEX_T operator()(const std::string& k) const
     {
         // Add your code here
-        std::string temp = k;
-        unsigned long long total = 0;
-        HASH_INDEX_T str_size = k.size();
-        int a_val;
-        size_t arr[5];
+        int total, intialVar;
+        int size = k.size();
+        std::string strTemp = k;
+        unsigned long long w[5];
 
-        if(str_size == 6){
+        if(size == 6){
             for(size_t i = 0; i < 6; i++){
-                a_val = letterDigitToNumber(k[i]);
-                total = (total*36) + a_val;
+                intialVar = letterDigitToNumber(k[i]);
+                total = (total*36) + intialVar;
             }
             total = total * rValues[4];
             return total;
 
-        }else if(str_size < 6){
+        }else if(size < 6){
             size_t blank_size = 1;
             for(size_t i = 0; i < blank_size; i++){
-                temp = temp+'!'; 
+                strTemp = strTemp+'!'; 
             }
             for(size_t i = 0; i < 6; i++){
-                if(temp[i] != '!'){
-                    a_val = letterDigitToNumber(k[i]);
+                if(strTemp[i] != '!'){
+                    intialVar = letterDigitToNumber(k[i]);
                 }else{
                     break;
                 }
-                total = (total*36) + a_val;
+                total = (total*36) + intialVar;
             }
             total = total * rValues[4];
             return total;
         }else{
             unsigned long long final_total = 0;
-            size_t blank_size = 30 - str_size;
+            size_t blank_size = 30 - size;
             for(size_t i = 0; i < blank_size; i++){
-                temp = '!' + temp ; 
+                strTemp = '!' + strTemp ; 
             }
-            std::cout<<temp<<std::endl;
+            std::cout<<strTemp<<std::endl;
             for(size_t i = 0; i < 5; i++){
                  for(size_t j = 6*i; j < 6*(i+1); j++){
-                    if(temp[j] != '!'){
-                        a_val = letterDigitToNumber(temp[j]);
+                    if(strTemp[j] != '!'){
+                        intialVar = letterDigitToNumber(strTemp[j]);
                     }else{
-                        a_val = 0;
+                        intialVar = 0;
                     }
-                    total = (total*36) + a_val;
+                    total = (total*36) + intialVar;
                 }
-                arr[i] = total;
+                w[i] = total;
                 total = 0;
             }
             for(size_t i = 0; i < 5; i++){
-                final_total = final_total + ((arr[i])*(rValues[i]));
+                final_total = final_total + ((w[i])*(rValues[i]));
             }
             return final_total;
         }
