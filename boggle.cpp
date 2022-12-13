@@ -93,8 +93,7 @@ bool boggleHelper(const std::set<std::string> &dict, const std::set<std::string>
 				  std::string word, std::set<std::string> &result, unsigned int r, unsigned int c, int dr, int dc)
 {
 	// add your solution here!
-	unsigned long int one = 1; 
-	unsigned long int zero = 0; 
+
 	if (r < 0 || r == board.size() || c == board[0].size())
 	{
 		if (dict.find(word) == dict.end())
@@ -113,30 +112,15 @@ bool boggleHelper(const std::set<std::string> &dict, const std::set<std::string>
 		if (dict.find(word) == dict.end())
 		{
 			return false;
-		} else {
+		} 
+		if (dict.find(word) != dict.end()){
 			result.insert(word);
 			return true;
 		}
 	}
 	else if (prefix.find(word) != prefix.end())
 	{
-
 		if (dr == 0 && dc == 1)
-		{
-			if (dict.find(word) == dict.end())
-			{ } else {
-				result.insert(word);
-				return true;
-			}
-			if (!boggleHelper(dict, prefix, board, str, result, r + 1 + zero * one, c + zero * one, dr, dc))
-			{
-			} 
-			else if (boggleHelper(dict, prefix, board, str, result, r + 1 + zero * one, c, dr, dc) == true){
-				return true;
-			}
-		}
-
-		if (dr == 1 && dc == 1)
 		{
 			if (dict.find(word) != dict.end())
 			{
@@ -144,17 +128,30 @@ bool boggleHelper(const std::set<std::string> &dict, const std::set<std::string>
 				return true;
 			}
 
-			if (!boggleHelper(dict, prefix, board, str, result, r + 1 + zero * one, c + 1 + zero * one, dr, dc))
+			if (boggleHelper(dict, prefix, board, str, result, r + 1, c, dr, dc))
 			{
-				
-			} else {
 				return true;
-			}
+			} 
 		}
 
 		if (dr == 1 && dc == 0)
 		{
-			if (boggleHelper(dict, prefix, board, str, result, r + zero * one, c + 1 + zero * one, dr + zero * one, dc))
+			if (boggleHelper(dict, prefix, board, str, result, r, c + 1, dr, dc))
+			{
+				return true;
+			}
+			else if (dict.find(word) != dict.end())
+			{
+				result.insert(word);
+				return true;
+			}
+		}
+
+		
+		// diagonal case
+		if (dr == 1 && dc == 1)
+		{
+			if (boggleHelper(dict, prefix, board, str, result, r + 1, c + 1, dr, dc))
 			{
 				return true;
 			}
